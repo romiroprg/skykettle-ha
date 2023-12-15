@@ -1,7 +1,7 @@
 {
-  "domain": "skykettle",
-  "name": "SkyKettle",
-  "codeowners": ["@clusterm"],
+  "domain": "romiroskykettle",
+  "name": "romiroSkyKettle",
+  "codeowners": ["@romiroprg"],
   "config_flow": true,
   "dependencies": ["bluetooth_adapters"],
   "documentation": "https://github.com/romiroprg/skykettle-ha/blob/master/README.md",
