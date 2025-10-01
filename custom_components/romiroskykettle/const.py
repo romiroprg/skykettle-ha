@@ -1,7 +1,7 @@
 """Constants for SkyKettle component."""
 
-DOMAIN = "skykettle"
-FRIENDLY_NAME = "SkyKettle"
+DOMAIN = "romiroskykettle"
+FRIENDLY_NAME = "romiroSkyKettle"
 MANUFACTORER = "Redmond"
 SUGGESTED_AREA = "kitchen"
 
