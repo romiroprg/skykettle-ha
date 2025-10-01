@@ -7,6 +7,6 @@
   "documentation": "https://github.com/romiroprg/skykettle-ha/blob/master/README.md",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/romiroprg/skykettle-ha/issues",
-  "requirements": [],
+  "requirements": ["bleak-retry-connector"],
   "version": "2.7.1"
 }

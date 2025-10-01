@@ -3,12 +3,13 @@ import logging
 import traceback
 from time import monotonic
 
-from bleak import BleakClient
+from bleak import BleakScanner
+from bleak_retry_connector import establish_connection, BleakClientWithServiceCache
 
 from homeassistant.components import bluetooth
 
 from .const import *
-from .skykettle import SkyKettle
+from .romiroskykettle import romiroSkyKettle
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -91,12 +92,18 @@ class KettleConnection(SkyKettle):
         if self._disposed:
             raise DisposedError()
         if self._client and self._client.is_connected: return
-        self._device = bluetooth.async_ble_device_from_address(self.hass, self._mac)
-        self._client = BleakClient(self._device)
+        self._device = await BleakScanner.find_device_by_address(self._mac)
+        if self._device is None:
+            _LOGGER.debug("Device not found!")
+            return
         _LOGGER.debug("Connecting to the Kettle...")
-        await asyncio.wait_for(
-            # Bluez connection timeout is not working actually
-            self._client.connect(timeout=KettleConnection.CONNECTION_TIMEOUT),
+        self._client = await asyncio.wait_for(
+            establish_connection(
+                BleakClientWithServiceCache,  # Use BleakClientWithServiceCache for service caching
+                self._device,
+                self._device.name or "Unknown Device",
+                max_attempts=3  # Will retry up to 3 times with backoff
+            ),
             timeout=KettleConnection.CONNECTION_TIMEOUT
         )
         _LOGGER.debug("Connected to the Kettle")
