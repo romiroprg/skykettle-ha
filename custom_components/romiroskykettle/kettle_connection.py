@@ -9,7 +9,7 @@ from bleak_retry_connector import establish_connection, BleakClientWithServiceCa
 from homeassistant.components import bluetooth
 
 from .const import *
-from .romiroskykettle import romiroSkyKettle
+from .skykettle import SkyKettle
 
 _LOGGER = logging.getLogger(__name__)
 
